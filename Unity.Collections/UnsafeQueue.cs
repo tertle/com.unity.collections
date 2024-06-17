@@ -362,7 +362,7 @@ namespace Unity.Collections
         /// </summary>
         /// <returns>The element at the end of this queue.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T Peek()
+        public readonly T Peek()
         {
             CheckNotEmpty();
 
@@ -374,7 +374,7 @@ namespace Unity.Collections
         /// Adds an element at the front of this queue.
         /// </summary>
         /// <param name="value">The value to be enqueued.</param>
-        public void Enqueue(T value)
+        public readonly void Enqueue(T value)
         {
             UnsafeQueueBlockHeader* writeBlock = UnsafeQueueData.AllocateWriteBlockMT<T>(m_Buffer, m_QueuePool, 0);
             UnsafeUtility.WriteArrayElement(writeBlock + 1, writeBlock->m_NumItems, value);
@@ -386,7 +386,7 @@ namespace Unity.Collections
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if this queue is empty.</exception>
         /// <returns>The element at the end of this queue.</returns>
-        public T Dequeue()
+        public readonly T Dequeue()
         {
             if (!TryDequeue(out T item))
             {
@@ -401,7 +401,7 @@ namespace Unity.Collections
         /// </summary>
         /// <param name="item">Outputs the removed element.</param>
         /// <returns>True if this queue was not empty.</returns>
-        public bool TryDequeue(out T item)
+        public readonly bool TryDequeue(out T item)
         {
             UnsafeQueueBlockHeader* firstBlock = (UnsafeQueueBlockHeader*)m_Buffer->m_FirstBlock;
 
@@ -449,7 +449,7 @@ namespace Unity.Collections
         /// <param name="allocator">The allocator to use.</param>
         /// <returns>An array containing a copy of this queue's content. The elements are ordered in the same order they were
         /// enqueued, *e.g.* the earliest enqueued element is copied to index 0 of the array.</returns>
-        public NativeArray<T> ToArray(AllocatorManager.AllocatorHandle allocator)
+        public readonly NativeArray<T> ToArray(AllocatorManager.AllocatorHandle allocator)
         {
             UnsafeQueueBlockHeader* firstBlock = (UnsafeQueueBlockHeader*)m_Buffer->m_FirstBlock;
             var outputArray = CollectionHelper.CreateNativeArray<T>(Count, allocator, NativeArrayOptions.UninitializedMemory);
@@ -475,7 +475,7 @@ namespace Unity.Collections
         /// <summary>
         /// Removes all elements of this queue.
         /// </summary>
-        public void Clear()
+        public readonly void Clear()
         {
             UnsafeQueueBlockHeader* firstBlock = (UnsafeQueueBlockHeader*)m_Buffer->m_FirstBlock;
 
@@ -799,7 +799,7 @@ namespace Unity.Collections
         /// Returns a parallel writer for this queue.
         /// </summary>
         /// <returns>A parallel writer for this queue.</returns>
-        public ParallelWriter AsParallelWriter()
+        public readonly ParallelWriter AsParallelWriter()
         {
             ParallelWriter writer;
 
@@ -832,7 +832,7 @@ namespace Unity.Collections
             /// Adds an element at the front of the queue.
             /// </summary>
             /// <param name="value">The value to be enqueued.</param>
-            public void Enqueue(T value)
+            public readonly void Enqueue(T value)
             {
                 UnsafeQueueBlockHeader* writeBlock = UnsafeQueueData.AllocateWriteBlockMT<T>(m_Buffer, m_QueuePool, m_ThreadIndex);
                 UnsafeUtility.WriteArrayElement(writeBlock + 1, writeBlock->m_NumItems, value);
@@ -844,7 +844,7 @@ namespace Unity.Collections
             /// </summary>
             /// <param name="value">The value to be enqueued.</param>
             /// <param name="threadIndexOverride">The thread index which must be set by a field from a job struct with the <see cref="NativeSetThreadIndexAttribute"/> attribute.</param>
-            internal void Enqueue(T value, int threadIndexOverride)
+            internal readonly void Enqueue(T value, int threadIndexOverride)
             {
                 UnsafeQueueBlockHeader* writeBlock = UnsafeQueueData.AllocateWriteBlockMT<T>(m_Buffer, m_QueuePool, threadIndexOverride);
                 UnsafeUtility.WriteArrayElement(writeBlock + 1, writeBlock->m_NumItems, value);
@@ -854,7 +854,7 @@ namespace Unity.Collections
 
         [Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS"), Conditional("UNITY_DOTS_DEBUG")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void CheckNotEmpty()
+        readonly void CheckNotEmpty()
         {
             if (m_Buffer->m_FirstBlock == (IntPtr)0)
             {

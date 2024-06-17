@@ -82,7 +82,7 @@ namespace Unity.Collections
         /// Returns the element at the end of this queue without removing it.
         /// </summary>
         /// <returns>The element at the end of this queue.</returns>
-        public T Peek()
+        public readonly T Peek()
         {
             CheckRead();
             return m_Queue->Peek();
@@ -92,7 +92,7 @@ namespace Unity.Collections
         /// Adds an element at the front of this queue.
         /// </summary>
         /// <param name="value">The value to be enqueued.</param>
-        public void Enqueue(T value)
+        public readonly void Enqueue(T value)
         {
             CheckWrite();
             m_Queue->Enqueue(value);
@@ -103,7 +103,7 @@ namespace Unity.Collections
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if this queue is empty.</exception>
         /// <returns>The element at the end of this queue.</returns>
-        public T Dequeue()
+        public readonly T Dequeue()
         {
             CheckWrite();
             return m_Queue->Dequeue();
@@ -114,7 +114,7 @@ namespace Unity.Collections
         /// </summary>
         /// <param name="item">Outputs the removed element.</param>
         /// <returns>True if this queue was not empty.</returns>
-        public bool TryDequeue(out T item)
+        public readonly bool TryDequeue(out T item)
         {
             CheckWrite();
             return m_Queue->TryDequeue(out item);
@@ -126,7 +126,7 @@ namespace Unity.Collections
         /// <param name="allocator">The allocator to use.</param>
         /// <returns>An array containing a copy of this queue's content. The elements are ordered in the same order they were
         /// enqueued, *e.g.* the earliest enqueued element is copied to index 0 of the array.</returns>
-        public NativeArray<T> ToArray(AllocatorManager.AllocatorHandle allocator)
+        public readonly NativeArray<T> ToArray(AllocatorManager.AllocatorHandle allocator)
         {
             CheckRead();
             return m_Queue->ToArray(allocator);
@@ -135,7 +135,7 @@ namespace Unity.Collections
         /// <summary>
         /// Removes all elements of this queue.
         /// </summary>
-        public void Clear()
+        public readonly void Clear()
         {
             CheckWrite();
             m_Queue->Clear();
@@ -403,7 +403,7 @@ namespace Unity.Collections
         /// Returns a parallel writer for this queue.
         /// </summary>
         /// <returns>A parallel writer for this queue.</returns>
-        public ParallelWriter AsParallelWriter()
+        public readonly ParallelWriter AsParallelWriter()
         {
             ParallelWriter writer;
 
@@ -438,7 +438,7 @@ namespace Unity.Collections
             /// Adds an element at the front of the queue.
             /// </summary>
             /// <param name="value">The value to be enqueued.</param>
-            public void Enqueue(T value)
+            public readonly void Enqueue(T value)
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
                 AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
@@ -451,7 +451,7 @@ namespace Unity.Collections
             /// </summary>
             /// <param name="value">The value to be enqueued.</param>
             /// <param name="threadIndexOverride">The thread index which must be set by a field from a job struct with the <see cref="NativeSetThreadIndexAttribute"/> attribute.</param>
-            internal void Enqueue(T value, int threadIndexOverride)
+            internal readonly void Enqueue(T value, int threadIndexOverride)
             {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
                 AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
@@ -471,7 +471,7 @@ namespace Unity.Collections
 
         [Conditional("ENABLE_UNITY_COLLECTIONS_CHECKS")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void CheckWrite()
+        readonly void CheckWrite()
         {
 #if ENABLE_UNITY_COLLECTIONS_CHECKS
             AtomicSafetyHandle.CheckWriteAndThrow(m_Safety);
