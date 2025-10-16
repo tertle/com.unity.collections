@@ -179,7 +179,7 @@ namespace Unity.Collections
             /// <param name="item">The value to add.</param>
             /// <param name="threadIndexOverride">The thread index which must be set by a field from a job struct with the <see cref="NativeSetThreadIndexAttribute"/> attribute.</param>
             /// <returns>True if the value is not already present.</returns>
-            internal bool Add(T item, int threadIndexOverride) => m_Data.TryAdd(item, false, threadIndexOverride);
+            public bool Add(T item, int threadIndexOverride) => m_Data.TryAdd(item, false, threadIndexOverride);
         }
 
         /// <summary>
@@ -331,11 +331,7 @@ namespace Unity.Collections
             public readonly bool IsCreated
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                get
-                {
-                    CheckRead();
-                    return m_Data.IsCreated;
-                }
+                get => m_Data.IsCreated;
             }
 
             /// <summary>
@@ -347,12 +343,12 @@ namespace Unity.Collections
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get
                 {
-                    CheckRead();
-                    if (!m_Data.IsCreated)
+                    if (!IsCreated)
                     {
                         return true;
                     }
 
+                    CheckRead();
                     return m_Data.IsEmpty;
                 }
             }

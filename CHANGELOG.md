@@ -1,12 +1,132 @@
 # Changelog
 
+## [2.6.2] - 2025-09-05
+
+
+### Changed
+
+* Updated Burst dependency to version 1.8.23.
+
+
+## [2.6.0-pre.4] - 2025-06-06
+
+### Fixed
+
+* Fixed an Issue where DataStreamReader failed to deserialize ulong variables only on Android, with burst off. Affected Unity 6.0.38 and onwards.
+
+
+## [2.6.0-pre.3] - 2025-06-06
+
+### Added
+
+* `threadIndexOverride` method overloads for `ParallelWriter.Add/TryAdd` operations for `NativeParallelHashMap`, `UnsafeParallelHashMap`, `NativeParallelHashSet`, `UnsafeParallelHashSet`, `NativeQueue`, `UnsafeQueue`, `NativeParallelMultiHashMap`, and `UnsafeParallelMultiHashMap`. These overloads allow some performance critical use-cases to sub-divide work that would previously be forced against a single collection, by enabling the (unsafe) injection of many instances of these collections (via their respective `ParallelWriter`s) into the same job. For example, this would allow you to convert a `NativeParallelMultiHashMap<Tuple<TIndex,TKey>,TValue>.ParallelWriter` pattern into an (unsafe) `NativeList<UnsafeParallelHashMap<TKey,TValue>.ParallelWriter>[TIndex]` pattern, which can; reduce individual collection capacities, reduce insertion/removal/clear call overheads, reduce the need to manually sort (or otherwise post-process) collection results, and allow better segmentation of work (i.e. higher granularity).
+
+### Changed
+
+* Updated Burst dependency to version 1.8.21
+
+### Fixed
+
+* UnsafeQueue memory leak due to OnDomainUnload callback being discarded by Burst.
+* Fixed incorrect error message when a NativeStream foreach index is out-of-range.
+
+## [2.6.0-exp.2] - 2025-03-07
+
+### Changed
+
+* Updated the `com.unity.nuget.mono-cecil` dependency to version `1.11.5`
+* Updated the `com.unity.burst` dependency to version `1.8.19`
+* Updated the `com.unity.test-framework dependency` to version `1.4.6`
+
+### Fixed
+
+* Fixed incorrect behavior of `UnsafeBitArray.ReadOnly.TestNone`
+
+
+## [2.5.7] - 2025-04-11
+
+### Changed
+
+* Updated the `com.unity.entities` dependency to version `1.3.14`
+* Updated the `com.unity.burst` dependency to version `1.8.19`
+* Updated the `com.unity.nuget.mono-cecil` dependency to version `1.11.5`
+* Updated the `com.unity.test-framework dependency` to version `1.4.6`
+* The minimum supported editor version is now 2022.3.20f1
+
+### Fixed
+
+* UnsafeQueue memory leak due to OnDomainUnload callback being discarded by Burst.
+
+
+## [2.5.3] - 2025-02-17
+
+### Fixed
+* xxHash3.Hash128 when length is exactly 16, 128, or 240 bytes.
+
+
+## [2.5.2] - 2025-01-16
+
+### Added
+
+* Added an explicit Mathematics 1.3.2 dependency
+
+### Fixed
+
+* Fixed incorrect behavior of `UnsafeBitArray.ReadOnly.TestNone`
+
+
+## [2.5.1] - 2024-09-06
+
+### Changed
+* Updated Burst dependency to version 1.8.17
+* Updated Unity Test Framework dependency to version 1.4.5
+* Updated entities packages dependencies
+
+### Fixed
+* Certain cases would cause an ILPostProcessor to fail, blocking compilation, but no more.
+
+
+## [2.5.0-pre.2] - 2024-07-17
+
+### Changed
+
+* Updated Burst dependency to version 1.8.16
+
+
+## [2.5.0-exp.1] - 2024-06-11
+
+### Added
+
+* SortJobDefer type for scheduling sorting on NativeList when content of the list is not known ahead of time, and depends on dependent jobs.
+
+### Changed
+
+* Update entities package dependencies
+
+### Fixed
+
+* Clarified usage of "front" and "end" in API docs for `NativeQueue` and `UnsafeQueue`
+* Default constructed container can call IsCreated and IsEmpty properties.
+
+
+## [2.4.3] - 2024-08-14
+
+### Changed
+
+* Update entities package dependencies
+
+
 ## [2.4.2] - 2024-05-30
+
+### Changed
+
 * Update entities package dependencies
 
 
 ## [2.4.1] - 2024-04-26
 
 ### Changed
+
 * Release preparation
 * Updated Burst dependency to version 1.8.13
 
@@ -14,7 +134,7 @@
 ## [2.4.0] - 2024-03-22
 
 ### Changed
-* Release preparation
+*Release Preparation
 
 
 ## [2.4.0-pre.5] - 2024-02-13
@@ -51,6 +171,17 @@
 ### Changed
 
 * The minimum supported editor version is now 2022.3.11f1
+
+### Deprecated
+
+
+### Removed
+
+
+### Fixed
+
+
+### Security
 
 
 ## [2.3.0-pre.3] - 2023-10-17

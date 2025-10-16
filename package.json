@@ -1,13 +1,14 @@
 {
   "name": "com.unity.collections",
   "displayName": "Collections",
-  "version": "2.4.2",
+  "version": "2.6.2",
   "unity": "2022.3",
-  "unityRelease": "11f1",
+  "unityRelease": "20f1",
   "dependencies": {
-    "com.unity.burst": "1.8.13",
-    "com.unity.nuget.mono-cecil": "1.11.4",
-    "com.unity.test-framework": "1.4.3",
+    "com.unity.burst": "1.8.23",
+    "com.unity.mathematics": "1.3.2",
+    "com.unity.nuget.mono-cecil": "1.11.5",
+    "com.unity.test-framework": "1.4.6",
     "com.unity.test-framework.performance": "3.0.3"
   },
   "description": "A C# collections library providing data structures that can be used in jobs, and optimized by Burst compiler.",
@@ -17,16 +18,16 @@
     "unity"
   ],
   "_upm": {
-    "changelog": "* Update entities package dependencies"
+    "changelog": "### Changed\n\n* Updated Burst dependency to version 1.8.23."
   },
   "upmCi": {
-    "footprint": "7655bd34494e79591b53f53739a3b26feef160e9"
+    "footprint": "42cae399f4515d49e1ee8a8dafb6d2a9cf98306a"
   },
-  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.collections@2.4/manual/index.html",
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.collections@2.6/manual/index.html",
   "repository": {
     "url": "https://github.cds.internal.unity3d.com/unity/dots.git",
     "type": "git",
-    "revision": "964c24b165e01a75458934a172bde8cce9b901f3"
+    "revision": "34a49c9a68f70872c0a108dbef6cdea306d6b593"
   },
-  "_fingerprint": "dc09d9a70ebd8439afd28494af4b2e94bd4260fd"
+  "_fingerprint": "aea9d3bd5e19f2a90fc3a39919974a5f3613a159"
 }
